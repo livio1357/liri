@@ -7,8 +7,10 @@ var fs = require('fs');
 // get keys 
 var Keys = require('./keys.js');
 
+var randomSong;
 
-var twitterconsum = Keys.consum
+
+var twitterconsum = Keys.consum;
 
 //commands
 
@@ -26,54 +28,97 @@ var search = process.argv[3];
 
 if (mytweets === 'my-tweets') {
 
-  var name = {
-    screen_name: "codemoji123"
-};
+    var name = {
+        screen_name: "codemoji123"
+    };
+
+    if (search === 'spotify-song') {
+
+        spotifyNow();
+    }
+
+    if (command === 'do-what-it-says') {
+        dowhat();
+    }
 
 
- twitterconsum.get("statuses/user_timeline", name, function(error, tweets, response) {
-    if (!error) {
-      
-      for (var i = 0; i < tweets.length; i++) {
-        console.log(`\nTweet ${i + 1}: ${tweets[i].text}`);
-        console.log(`Created On: ${tweets[i].created_at}`);
-        console.log("\n-------------------");
-      }
+    twitterconsum.get("statuses/user_timeline", name, function(error, tweets, response) {
+        if (!error) {
+
+            for (var i = 0; i < tweets.length; i++) {
+                console.log(`\nTweet ${i + 1}: ${tweets[i].text}`);
+                console.log(`Created On: ${tweets[i].created_at}`);
+                console.log("\n-------------------");
+            }
+        } else {
+            console.log(error);
+        }
+    });
+}
+
+
+function spotifyNow() {
+    console.log("Its time to party with some music");
+
+    var searchMusic;
+    if (search === undefined) {
+        console.log("Please try again with something that we really do have in our system");
     } else {
-      console.log(error);
+        searchMusic = search; //Finds user input
     }
-  });
+
+    spotify.search({ type: "track", query: searchMusic }, function(err, data) {
+        if (err) {
+            console.log(err);
+            return;
+        } else if (data.error) {
+            console.log(data);
+            return;
+        } else {
+            console.dir(data);
+            // console.log("Artist: " + data.tracks.items[0].artists[0].name);
+            // console.log("Song: " + data.tracks.items[0].name);
+            // console.log("Album: " + data.tracks.items[0].album.name);
+            // console.log("Preview here: " + data.tracks.items[0].preview_url);
+        }
+
+    })
+
 }
 
 
-function spotifyNow(){
-  console.log("Its time to party with some music");
 
-  var searchMusic;
-  if(search === undefined){
-    console.log("Please try again with something that we really do have in our system"); 
-  }
-  else{
-    searchMusic = search; //Finds user input
-  }
 
-  spotify.search({type: "track", query: searchMusic}, function(err , data){
-    if(err){
-      console.log(err);
-      return;
-    } else if (data.error) {
-      console.log(data);
-      return;
-    }
+function dowhat() {
+    fs.readFile('random.txt', 'utf8', function(err, data) {
 
-    else{
-      console.dir(data);
-      // console.log("Artist: " + data.tracks.items[0].artists[0].name);
-      // console.log("Song: " + data.tracks.items[0].name);
-      // console.log("Album: " + data.tracks.items[0].album.name);
-      // console.log("Preview here: " + data.tracks.items[0].preview_url);
-    }
+        var dataArr = data.split(","); randomSong = dataArr[1];
+    
 
-  })
+    function spotifyNow() {
+        console.log("Its time to party with some music");
 
-}
+        var searchRandom;
+        if (search === undefined) {
+            console.log("Please try again with something that we really do have in our system");
+        } else {
+            searchMusic = search; //Finds user input
+        }
+
+        spotify.search({ type: "track", query: randomSong }, function(err, data) {
+            if (err) {
+                console.log(err);
+                return;
+            } else if (data.error) {
+                console.log(data);
+                return;
+            } else {
+                console.dir(data);
+                // console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                // console.log("Song: " + data.tracks.items[0].name);
+                // console.log("Album: " + data.tracks.items[0].album.name);
+                // console.log("Preview here: " + data.tracks.items[0].preview_url);
+            }
+
+
+        });
