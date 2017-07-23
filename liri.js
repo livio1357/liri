@@ -32,14 +32,16 @@ if (mytweets === 'my-tweets') {
         screen_name: "codemoji123"
     };
 
-    if (search === 'spotify-song') {
+////// spotify
+
+if (search === 'spotify-song') {
 
         spotifyNow();
-    }
+    };
 
     if (command === 'do-what-it-says') {
         dowhat();
-    }
+    };
 
 
     twitterconsum.get("statuses/user_timeline", name, function(error, tweets, response) {
@@ -118,7 +120,9 @@ function dowhat() {
                 // console.log("Song: " + data.tracks.items[0].name);
                 // console.log("Album: " + data.tracks.items[0].album.name);
                 // console.log("Preview here: " + data.tracks.items[0].preview_url);
-            }
+            };
 
 
-        });
+
+
+            
