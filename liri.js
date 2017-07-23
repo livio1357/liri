@@ -1,51 +1,47 @@
 var Twitter = require('twitter');
 
-var spotify = require("spotify");
+//var spotify = require("spotify");
+
+var request = require("request");
 
 var fs = require('fs');
 
 // get keys 
 var Keys = require('./keys.js');
 
-var randomSong;
+var movieApi = "40e9cece"
+
+//var randomSong;
 
 
 var twitterconsum = Keys.consum;
 
 //commands
 
-console.log("Please Type one of the following: my-tweets, spotify-song, movie-please")
+console.log("Please Type one of the following: my-tweets, movie-this then the movie you want")
 
 
 // search / commands
 
-var mytweets = process.argv[2];
+var command = process.argv[2];
 
-var search = process.argv[3];
+
+
+
 
 
 //command to type after node liri.js my-tweets
 
-if (mytweets === 'my-tweets') {
+if (command === 'my-tweets') {
 
     var name = {
         screen_name: "codemoji123"
     };
 
-////// spotify
-
-if (search === 'spotify-song') {
-
-        spotifyNow();
-    };
-
-    if (command === 'do-what-it-says') {
-        dowhat();
-    };
 
 
     twitterconsum.get("statuses/user_timeline", name, function(error, tweets, response) {
-        if (!error) {
+        if (!error) { console.log("There was an error")
 
             for (var i = 0; i < tweets.length; i++) {
                 console.log(`\nTweet ${i + 1}: ${tweets[i].text}`);
@@ -56,10 +52,40 @@ if (search === 'spotify-song') {
             console.log(error);
         }
     });
+
 }
 
+// movie
 
-function spotifyNow() {
+if (command === "movie-this") {
+    var movie = process.argv[3];
+    request("http://www.omdbapi.com/?apikey=" + movieApi + "&t=" + movie, function(error, response, body) {
+        if (error) {
+            console.log("error:", error);
+        } else {
+
+            console.log(`Title: ${JSON.parse(body).Title}`);
+            console.log(`Year: ${JSON.parse(body).Year}`);
+            console.log(`Country: ${JSON.parse(body).Country}`);
+            console.log(`Language(s): ${JSON.parse(body).Language}`);
+            console.log(`Plot: ${JSON.parse(body).Plot}`);
+            console.log(`Actors: ${JSON.parse(body).Actors}`);
+        }
+    });
+}
+
+// spotify was giving me problems
+
+/*// spotify
+
+  var search = process.argv[3];
+
+if (search === 'spotify-song') {
+
+        spotifyPlay();
+    }
+    // spoti
+function spotifyPlay() {
     console.log("Its time to party with some music");
 
     var searchMusic;
@@ -89,7 +115,9 @@ function spotifyNow() {
 }
 
 
-
+ if (command === 'do-what-it-says') {
+        
+    };
 
 function dowhat() {
     fs.readFile('random.txt', 'utf8', function(err, data) {
@@ -123,6 +151,7 @@ function dowhat() {
 
 
 
-    })
+    });
 
 };
+*/

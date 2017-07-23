@@ -1,5 +1,5 @@
 var Twitter = require('twitter');
-var Spotify = require('node-spotify-api');
+//var Spotify = require('node-spotify-api');
 //twitter
 var consum = new Twitter({
     consumer_key: '0cbq656xYKESPT9h7sO3CIeCf',
@@ -9,13 +9,13 @@ var consum = new Twitter({
 });
 
 
-// spotify
+//spotify
 
-var spotify = new Spotify({
-  id: '539f4fcc9ce24201b51c39bc8745d851',
-  secret: 'a311e7086a274595b014cda72494e32c'
-});
+//var spotify = new Spotify({
+//id: '539f4fcc9ce24201b51c39bc8745d851',
+//secret: 'a311e7086a274595b014cda72494e32c'
+//});
 
 //export everywhere
 module.exports.consum = consum;
-module.exports.spotify = spotify;
+//module.exports.spotify = spotify;
