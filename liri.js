@@ -94,7 +94,7 @@ function spotifyNow() {
 function dowhat() {
     fs.readFile('random.txt', 'utf8', function(err, data) {
 
-        var dataArr = data.split(","); randomSong = dataArr[1];
+        var dataArr = data.split(","); randomSong = dataArr[1];});
     
 
     function spotifyNow() {
@@ -103,8 +103,6 @@ function dowhat() {
         var searchRandom;
         if (search === undefined) {
             console.log("Please try again with something that we really do have in our system");
-        } else {
-            searchMusic = search; //Finds user input
         }
 
         spotify.search({ type: "track", query: randomSong }, function(err, data) {
@@ -120,9 +118,11 @@ function dowhat() {
                 // console.log("Song: " + data.tracks.items[0].name);
                 // console.log("Album: " + data.tracks.items[0].album.name);
                 // console.log("Preview here: " + data.tracks.items[0].preview_url);
-            };
+            }
 
 
 
 
-            
+    })
+
+};
