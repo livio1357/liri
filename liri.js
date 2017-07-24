@@ -41,12 +41,12 @@ if (command === 'my-tweets') {
 
 
     twitterconsum.get("statuses/user_timeline", name, function(error, tweets, response) {
-        if (!error) { console.log("There was an error")
+        if (!error) { console.log("There was an error :(")
 
             for (var i = 0; i < tweets.length; i++) {
-                console.log(`\nTweet ${i + 1}: ${tweets[i].text}`);
-                console.log(`Created On: ${tweets[i].created_at}`);
-                console.log("\n-------------------");
+                console.log(`\n The Tweet: ${i + 1}: ${tweets[i].text}`);
+                console.log(`When the tweet was made ${tweets[i].created_at}`);
+                console.log("\n--- :)");
             }
         } else {
             console.log(error);
@@ -61,7 +61,7 @@ if (command === "movie-this") {
     var movie = process.argv[3];
     request("http://www.omdbapi.com/?apikey=" + movieApi + "&t=" + movie, function(error, response, body) {
         if (error) {
-            console.log("error:", error);
+            console.log("SuperError: :(", error);
         } else {
 
             console.log(`Title: ${JSON.parse(body).Title}`);
